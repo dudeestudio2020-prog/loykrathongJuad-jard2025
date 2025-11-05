@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ลอยกระทงออนไลน์กับจ้วดจ้าด สตูดิโอ</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Prompt', sans-serif;
+      background: linear-gradient(to top, #020d1f, #0e2745);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 900px;
+      width: 100%;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+    h2 {
+      text-align: center;
+      color: #ffc864;
+      font-weight: normal;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+    input, select, textarea {
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 1rem;
+      outline: none;
+    }
+    button {
+      margin-top: 14px;
+      background: linear-gradient(90deg, #ffcc33, #ff9933);
+      color: #000;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .water {
+      position: relative;
+      background: linear-gradient(to top, #013, #025);
+      height: 220px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+    .moon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 2rem;
+    }
+    .krathong {
+      position: absolute;
+      bottom: 10px;
+      font-size: 2rem;
+      animation: floatAcross 20s linear forwards, bob 3s ease-in-out infinite;
+    }
+    @keyframes floatAcross {
+      from { left: -60px; }
+      to { left: 100%; }
+    }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    ul { list-style: none; padding: 0; }
+    li {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 6px 10px;
+      margin-top: 4px;
+    }
+    .meta {
+      font-size: 0.8rem;
+      color: #ccc;
+    }
+    .info-box {
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🪷 ลอยกระทงออนไลน์ "จ้วดจ้าด สตูดิโอ" 🪷</h1>
+    <h2>กับศิลปินในค่ายของเรา 🎤</h2>
+
+    <!-- ล็อกอิน -->
+    <div id="loginSection" class="info-box">
+      <div id="loginFormBox">
+        <strong>ลงชื่อเข้าร่วมกิจกรรม</strong>
+        <form id="loginForm">
+          <label for="loginName">ชื่อเล่น</label>
+          <input id="loginName" placeholder="พิมพ์ชื่อเล่นของคุณ" />
+          <button type="submit">✅ เข้าร่วมกิจกรรม</button>
+        </form>
+      </div>
+
+      <div id="loggedInBox" style="display:none;">
+        <strong>คุณได้เข้าร่วมแล้ว</strong>
+        <p id="loggedInText" class="meta"></p>
+        <button id="logoutBtn" type="button">🚪 ออกจากระบบ</button>
+      </div>
+    </div>
+
+    <!-- ฟอร์มลอยกระทง -->
+    <form id="krathongForm">
+      <label for="name">ชื่อเล่น (ดึงจากชื่อที่ลงทะเบียนหรือสามารถแก้ได้)</label>
+      <input id="name" placeholder="พิมพ์ชื่อเล่นของคุณ" />
+
+      <label for="wish">คำอธิษฐาน (จะไม่ถูกเผยแพร่)</label>
+      <textarea id="wish" rows="3" placeholder="ขอให้ปีนี้มีแต่สิ่งดี ๆ เข้ามา..."></textarea>
+
+      <label for="artist">อยากลอยกับศิลปินในค่าย</label>
+      <select id="artist">
+        <option value="">-- เลือกศิลปินในค่าย --</option>
+        <option>ไพบูลย์ แสงเดือน</option>
+        <option>ท๊อป พสุพัจจ์</option>
+        <option>สตางค์ พรธิดา</option>
+        <option>อุ๋มอิ๋ม อธิชา</option>
+        <option>บราว ป้ายแดง</option>
+        <option>กัสจัง ธนา</option>
+        <option>ทุกศิลปินในค่าย</option>
+      </select>
+
+      <label for="emoji">เลือกกระทงของคุณ</label>
+      <select id="emoji">
+        <option>🪷</option>
+        <option>🏮</option>
+        <option>🌸🪷</option>
+        <option>🕯️🪷</option>
+        <option>💖🪷</option>
+        <option>🍃🪷</option>
+      </select>
+
+      <button type="submit">💦 กดลอยกระทง</button>
+    </form>
+
+    <div class="water" id="waterArea">
+      <div class="moon">🌕</div>
+    </div>
+
+    <h3>📜 ทุกคำอธิฐานสมปรารถนา</h3>
+   
+  <script>
+    const form = document.getElementById('krathongForm');
+    const waterArea = document.getElementById('waterArea');
+    const wishesList = document.getElementById('wishesList');
+    const participantsCountEl = document.getElementById('participantsCount');
+
+    const loginForm = document.getElementById('loginForm');
+    const loginFormBox = document.getElementById('loginFormBox');
+    const loggedInBox = document.getElementById('loggedInBox');
+    const loggedInText = document.getElementById('loggedInText');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const nameInput = document.getElementById('name');
+
+    const USER_KEY = 'jj_user';
+    const PARTICIPANT_KEY = 'jj_participants';
+
+    function loadCurrentUser() {
+      try { return JSON.parse(localStorage.getItem(USER_KEY)) || null; } catch { return null; }
+    }
+    function saveCurrentUser(user) { localStorage.setItem(USER_KEY, JSON.stringify(user)); }
+    function clearCurrentUser() { localStorage.removeItem(USER_KEY); }
+    function loadParticipants() {
+      try {
+        const data = JSON.parse(localStorage.getItem(PARTICIPANT_KEY));
+        return Array.isArray(data) ? data : [];
+      } catch { return []; }
+    }
+    function saveParticipants(list) {
+      localStorage.setItem(PARTICIPANT_KEY, JSON.stringify(list));
+    }
+    function updateParticipantsCount() {
+      participantsCountEl.textContent = loadParticipants().length;
+    }
+    function upsertParticipant(name) {
+      const list = loadParticipants();
+      if (!list.includes(name)) list.push(name);
+      saveParticipants(list);
+      updateParticipantsCount();
+    }
+
+    function applyUserToUI(user) {
+      if (!user) {
+        loginFormBox.style.display = 'block';
+        loggedInBox.style.display = 'none';
+        nameInput.value = '';
+        return;
+      }
+      loginFormBox.style.display = 'none';
+      loggedInBox.style.display = 'block';
+      loggedInText.textContent = `ชื่อของคุณ: ${user.name}`;
+      nameInput.value = user.name;
+    }
+
+    function floatKrathong(emoji) {
+      const el = document.createElement('div');
+      el.className = 'krathong';
+      el.textContent = emoji;
+      const bottom = Math.random() * 120 + 10;
+      const duration = Math.random() * 10 + 15;
+      el.style.bottom = `${bottom}px`;
+      el.style.animationDuration = `${duration}s, 3s`;
+      waterArea.appendChild(el);
+      setTimeout(() => el.remove(), duration * 1000);
+    }
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const loginName = document.getElementById('loginName').value.trim();
+      if (!loginName) return alert('กรุณากรอกชื่อเล่น');
+      const user = { name: loginName };
+      saveCurrentUser(user);
+      upsertParticipant(loginName);
+      applyUserToUI(user);
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      clearCurrentUser();
+      applyUserToUI(null);
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const user = loadCurrentUser();
+      if (!user) return alert('กรุณาลงชื่อก่อนลอยกระทง');
+      const name = nameInput.value.trim() || user.name;
+      const artist = document.getElementById('artist').value;
+      const emoji = document.getElementById('emoji').value;
+      floatKrathong(emoji);
+
+      let timeString;
+      try { timeString = new Date().toLocaleString('th-TH'); } 
+      catch { timeString = new Date().toLocaleString(); }
+
+      const li = document.createElement('li');
+      li.innerHTML = `<strong>${emoji} ${name}</strong><br><span class="meta">ลอยกับ: ${artist || '-'} • ${timeString}</span>`;
+      wishesList.prepend(li);
+
+      upsertParticipant(name);
+      document.getElementById('wish').value = '';
+    });
+
+    (function init() {
+      const user = loadCurrentUser();
+      applyUserToUI(user);
+      updateParticipantsCount();
+      floatKrathong('🪷');
+    })();
+  </script>
+</body>
+</html>
